@@ -7,7 +7,7 @@ public protocol SortedSet: BidirectionalCollection, CustomStringConvertible wher
     func contains(_ element: Element) -> Bool
 
     @discardableResult
-    mutating func insert(_ element: Element) -> (hasInserted: Bool, memberAfterInsert: Element)
+    mutating func insert(_ newElement: Element) -> (didInsert: Bool, memberAfterInsert: Element)
 }
 
 extension PlaygroundQuickLook {

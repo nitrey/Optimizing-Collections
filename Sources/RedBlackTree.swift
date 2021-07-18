@@ -29,13 +29,13 @@ extension RedBlackTree {
     }
     
     @discardableResult
-    public mutating func insert(_ newElement: T) -> (hasInserted: Bool, memberAfterInsert: T) {
+    public mutating func insert(_ newElement: T) -> (didInsert: Bool, memberAfterInsert: T) {
         let (tree, old) = self.inserting(newElement)
         self = tree
         if let old = old {
-            return (false, old)
+            return (didInsert: false, memberAfterInsert: old)
         } else {
-            return (true, newElement)
+            return (didInsert: true, memberAfterInsert: newElement)
         }
     }
     

@@ -71,7 +71,7 @@ extension OrderedSet: SortedSet {
     }
     
     @discardableResult
-    public mutating func insert(_ newElement: T) -> (hasInserted: Bool, memberAfterInsert: T) {
+    public mutating func insert(_ newElement: T) -> (didInsert: Bool, memberAfterInsert: T) {
         let index = storage.index(
             of: newElement,
             inSortedRange: NSRange(0 ..< storage.count),
@@ -79,11 +79,11 @@ extension OrderedSet: SortedSet {
             usingComparator: OrderedSet.compare
         )
         if index < endIndex, storage[index] as! T == newElement {
-            return (false, storage[index] as! T)
+            return (didInsert: false, memberAfterInsert: storage[index] as! T)
         } else {
             makeUniqueIfNeeded()
             storage.insert(newElement, at: index)
-            return (true, newElement)
+            return (didInsert: true, memberAfterInsert: newElement)
         }
     }
 }

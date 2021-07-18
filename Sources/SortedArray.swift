@@ -52,6 +52,8 @@ extension SortedArray: RandomAccessCollection {
     }
 }
 
+// MARK: - SortedSet
+
 extension SortedArray: SortedSet {
     
     public var description: String {
@@ -59,13 +61,13 @@ extension SortedArray: SortedSet {
     }
     
     @discardableResult
-    public mutating func insert(_ newElement: T) -> (hasInserted: Bool, memberAfterInsert: T) {
+    public mutating func insert(_ newElement: T) -> (didInsert: Bool, memberAfterInsert: T) {
         let index = self.index(for: newElement)
         if index < storage.endIndex, storage[index] == newElement {
-            return (false, storage[index])
+            return (didInsert: false, memberAfterInsert: storage[index])
         } else {
             storage.insert(newElement, at: index)
-            return (true, newElement)
+            return (didInsert: true, memberAfterInsert: newElement)
         }
     }
         

@@ -231,10 +231,10 @@ extension RedBlackTree2 {
 
 extension RedBlackTree2 {
     
-    public func insert(_ newElement: T) -> (hasInserted: Bool, memberAfterInsert: T) {
+    public func insert(_ newElement: T) -> (didInsert: Bool, memberAfterInsert: T) {
         guard let root = makeRootUnique() else {
             self.root = Node(.black, newElement, nil, nil)
-            return (true, newElement)
+            return (didInsert: true, memberAfterInsert: newElement)
         }
         defer { root.color = .black }
         return root.insert(newElement)
@@ -243,30 +243,30 @@ extension RedBlackTree2 {
 
 extension RedBlackTree2.Node {
     
-    fileprivate func insert(_ newElement: T) -> (hasInserted: Bool, memberAfterInsert: T) {
+    fileprivate func insert(_ newElement: T) -> (didInsert: Bool, memberAfterInsert: T) {
         mutationCount += 1
         if newElement < value {
             if let left = makeLeftUnique() {
                 let result = left.insert(newElement)
-                if result.hasInserted { self.balance() }
+                if result.didInsert { self.balance() }
                 return result
             } else {
                 self.left = .init(.red, newElement, nil, nil)
-                return (hasInserted: true, memberAfterInsert: newElement)
+                return (didInsert: true, memberAfterInsert: newElement)
             }
             
         } else if newElement > value {
             if let right = makeRightUnique() {
                 let result = right.insert(newElement)
-                if result.hasInserted { self.balance() }
+                if result.didInsert { self.balance() }
                 return result
             } else {
                 self.right = .init(.red, newElement, nil, nil)
-                return (hasInserted: true, memberAfterInsert: newElement)
+                return (didInsert: true, memberAfterInsert: newElement)
             }
             
         } else {
-            return (hasInserted: false, memberAfterInsert: value)
+            return (didInsert: false, memberAfterInsert: value)
         }
     }
 }
